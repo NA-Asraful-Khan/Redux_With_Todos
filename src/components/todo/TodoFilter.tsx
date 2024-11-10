@@ -1,0 +1,69 @@
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAppDispatch } from "@/redux/hooks";
+import { setFilter } from "@/redux/features/todo.slice";
+
+export function TodoFilter() {
+  const dispatch = useAppDispatch();
+  const [position, setPosition] = React.useState("all");
+
+  const handleFilterClick = (value: string) => {
+    // dispatch(filterTodo(filter));
+    setPosition(value);
+    if (value === "all") {
+      dispatch(setFilter({ type: "", value: "" }));
+    } else if (value === "pending") {
+      dispatch(setFilter({ type: "status", value: value }));
+    } else if (value === "completed") {
+      dispatch(setFilter({ type: "status", value: value }));
+    } else if (value === "high") {
+      dispatch(setFilter({ type: "priority", value: value }));
+    } else if (value === "medium") {
+      dispatch(setFilter({ type: "priority", value: value }));
+    } else if (value === "low") {
+      dispatch(setFilter({ type: "priority", value: value }));
+    }
+  };
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="bg-primary-gradient text-xl font-semibold">
+          Filter
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Status</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={(value) => handleFilterClick(value)}
+        >
+          <DropdownMenuRadioItem value="all">All Task</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="pending">Pending</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="completed">
+            Completed
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+        <DropdownMenuLabel>Priority</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={(value) => handleFilterClick(value)}
+        >
+          <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="medium">Medium</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
