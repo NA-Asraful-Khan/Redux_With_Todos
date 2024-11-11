@@ -18,16 +18,19 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addTodo } from "@/redux/features/todo.slice";
-import { useAppDispatch } from "@/redux/hooks";
+// import { useAppDispatch } from "@/redux/hooks";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { FormEvent, useState } from "react";
+import { useCreateTodoMutation } from "@/redux/api/api";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
-  const dispatch = useAppDispatch();
+
+  const [addTodo, { data, isLoading, isError, isSuccess }] =
+    useCreateTodoMutation();
+  console.log({ data, isLoading, isError, isSuccess });
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const randomString =
@@ -37,8 +40,10 @@ const AddTodoModal = () => {
       title: task,
       description: description,
       priority: priority,
+      isCompleted: false,
     };
-    dispatch(addTodo(taskDetails));
+
+    addTodo(taskDetails);
   };
   return (
     <Dialog>

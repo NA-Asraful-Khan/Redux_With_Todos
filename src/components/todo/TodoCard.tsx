@@ -24,28 +24,44 @@ const TodoCard = ({
   return (
     <div className="bg-white rounded-md flex justify-between items-center p-3 border">
       <input
+        className="mr-3"
         onChange={toggleHandler}
         type="checkbox"
         name="complete"
         id="complete"
       />
-      <p className="font-semibold">{title}</p>
-      {isCompleted ? (
-        <p className="text-green-500 font-semibold">Complete</p>
-      ) : (
-        <p className="text-red-500 font-semibold">Pending</p>
-      )}
+      <p className="font-semibold flex-1">{title}</p>
 
-      <p>{description}</p>
-      {priority === "high" ? (
-        <p className="text-red-500 font-semibold">High</p>
-      ) : priority === "medium" ? (
-        <p className="text-yellow-500 font-semibold">Medium</p>
-      ) : (
-        priority === "low" && (
-          <p className="text-green-500 font-semibold">Low</p>
-        )
-      )}
+      <div className="flex-1">
+        {isCompleted ? (
+          <p className="text-green-500 font-semibold">Complete</p>
+        ) : (
+          <p className="text-red-500 font-semibold">Pending</p>
+        )}
+      </div>
+
+      <p className="flex-2">{description}</p>
+
+      <div className="flex-1">
+        {priority === "high" ? (
+          <>
+            <div className="size-3 rounded-full bg-red-500"></div>
+            <p className="text-red-500 font-semibold">High</p>
+          </>
+        ) : priority === "medium" ? (
+          <>
+            <div className="size-3 rounded-full bg-yellow-500"></div>
+            <p className="text-yellow-500 font-semibold">Medium</p>
+          </>
+        ) : (
+          priority === "low" && (
+            <>
+              <div className="size-3 rounded-full bg-green-500"></div>
+              <p className="text-green-500 font-semibold">Low</p>
+            </>
+          )
+        )}
+      </div>
       <div className="space-x-5">
         <UpdateTodoModel id={id} />
         <Button

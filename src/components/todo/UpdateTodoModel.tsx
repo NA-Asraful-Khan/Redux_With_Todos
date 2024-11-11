@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getFilteredTodos, updateTodo } from "@/redux/features/todo.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { getFilteredTodos } from "@/redux/features/todo.slice";
+import { useAppSelector } from "@/redux/hooks";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { FormEvent, useState } from "react";
 
@@ -30,11 +30,9 @@ const UpdateTodoModel = ({ id }: TTodoCardProps) => {
   const todos = useAppSelector(getFilteredTodos);
   const todo = todos.find((t) => t.id === id);
 
-  const [task, setTask] = useState(todo!.title);
-  const [description, setDescription] = useState(todo!.description);
-  const [priority, setPriority] = useState(todo!.priority);
-
-  const dispatch = useAppDispatch();
+  const [task, setTask] = useState("todo!.title");
+  const [description, setDescription] = useState("todo!.description");
+  const [priority, setPriority] = useState("todo!.priority");
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +42,6 @@ const UpdateTodoModel = ({ id }: TTodoCardProps) => {
       description: description,
       priority: priority,
     };
-    dispatch(updateTodo(taskDetails));
   };
   return (
     <Dialog>
