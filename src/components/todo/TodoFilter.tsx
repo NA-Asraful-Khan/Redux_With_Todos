@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,13 +12,12 @@ import {
 import { useAppDispatch } from "@/redux/hooks";
 import { setFilter } from "@/redux/features/todo.slice";
 
-export function TodoFilter() {
+export function TodoFilter({ priority, setPriority }) {
   const dispatch = useAppDispatch();
-  const [position, setPosition] = React.useState("all");
 
   const handleFilterClick = (value: string) => {
     // dispatch(filterTodo(filter));
-    setPosition(value);
+    setPriority(value);
     if (value === "all") {
       dispatch(setFilter({ type: "", value: "" }));
     } else if (value === "pending") {
@@ -44,10 +43,10 @@ export function TodoFilter() {
         <DropdownMenuLabel>Status</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={position}
+          value={priority}
           onValueChange={(value) => handleFilterClick(value)}
         >
-          <DropdownMenuRadioItem value="all">All Task</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="">All Task</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="pending">Pending</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="completed">
             Completed
@@ -56,7 +55,7 @@ export function TodoFilter() {
         <DropdownMenuLabel>Priority</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={position}
+          value={priority}
           onValueChange={(value) => handleFilterClick(value)}
         >
           <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>

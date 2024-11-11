@@ -4,6 +4,7 @@ import { useGetTodosQuery } from "@/redux/api/api";
 import AddTodoModal from "./AddTodoModal";
 import TodoCard from "./TodoCard";
 import { TodoFilter } from "./TodoFilter";
+import { useState } from "react";
 // import { getFilteredTodos } from "@/redux/features/todo.slice";
 type Todo = {
   id: string;
@@ -13,11 +14,12 @@ type Todo = {
   isCompleted?: boolean;
 };
 const TodoContainer = () => {
+  const [priority, setPriority] = useState("");
   //* From Locale Store
   // const todos = useAppSelector(getFilteredTodos);
 
   //* From Server Store
-  const { data: todos, isLoading } = useGetTodosQuery(undefined);
+  const { data: todos, isLoading } = useGetTodosQuery(priority);
   console.log(todos);
   if (isLoading) {
     return <p>Loading...</p>;
@@ -26,12 +28,12 @@ const TodoContainer = () => {
     <div>
       <div className="flex justify-between mb-5">
         <AddTodoModal />
-        <TodoFilter />
+        <TodoFilter priority={priority} setPriority={setPriority} />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl p-[5px] ">
-        {todos?.length > 0 ? (
+        {todos?.data?.length > 0 ? (
           <div className="bg-white p-5 w-full h-full space-y-3 rounded-lg">
-            {todos?.map((item: Todo, i: number) => (
+            {todos?.data?.map((item: Todo, i: number) => (
               <TodoCard key={i} {...item} />
             ))}
           </div>

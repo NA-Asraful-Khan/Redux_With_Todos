@@ -22,7 +22,7 @@ const TodoCard = ({
     dispatch(toggleCompleted(id));
   };
   return (
-    <div className="bg-white rounded-md flex justify-between items-center p-3 border">
+    <div className="bg-white rounded-md flex justify-start items-center p-3 border">
       <input
         className="mr-3"
         onChange={toggleHandler}
@@ -40,25 +40,25 @@ const TodoCard = ({
         )}
       </div>
 
-      <p className="flex-2">{description}</p>
+      <p className="flex-1">{description}</p>
 
       <div className="flex-1">
         {priority === "high" ? (
-          <>
+          <div className="flex justify-start items-center gap-1">
             <div className="size-3 rounded-full bg-red-500"></div>
             <p className="text-red-500 font-semibold">High</p>
-          </>
+          </div>
         ) : priority === "medium" ? (
-          <>
+          <div className="flex justify-start items-center gap-1">
             <div className="size-3 rounded-full bg-yellow-500"></div>
             <p className="text-yellow-500 font-semibold">Medium</p>
-          </>
+          </div>
         ) : (
           priority === "low" && (
-            <>
+            <div className="flex justify-start items-center gap-1">
               <div className="size-3 rounded-full bg-green-500"></div>
               <p className="text-green-500 font-semibold">Low</p>
-            </>
+            </div>
           )
         )}
       </div>
