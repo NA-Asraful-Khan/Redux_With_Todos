@@ -21,6 +21,15 @@ export const baseApi = createApi({
       },
       providesTags: ["todo"],
     }),
+    getSingleTodo: builder.query({
+      query: (id) => {
+        return {
+          method: "GET",
+          url: `/todos/${id}`,
+        };
+      },
+      providesTags: ["todo"],
+    }),
     createTodo: builder.mutation({
       query: (data) => {
         return {
@@ -31,7 +40,32 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["todo"],
     }),
+    updateTodo: builder.mutation({
+      query: (options) => {
+        return {
+          method: "PUT",
+          url: `/todos/${options.id}`,
+          body: options.data,
+        };
+      },
+      invalidatesTags: ["todo"],
+    }),
+    deleteTodo: builder.mutation({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/todos/${id}`,
+        };
+      },
+      invalidatesTags: ["todo"],
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useCreateTodoMutation } = baseApi;
+export const {
+  useGetTodosQuery,
+  useCreateTodoMutation,
+  useUpdateTodoMutation,
+  useGetSingleTodoQuery,
+  useDeleteTodoMutation,
+} = baseApi;

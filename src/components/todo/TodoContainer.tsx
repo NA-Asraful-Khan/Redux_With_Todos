@@ -7,7 +7,7 @@ import { TodoFilter } from "./TodoFilter";
 import { useState } from "react";
 // import { getFilteredTodos } from "@/redux/features/todo.slice";
 type Todo = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   priority: string;
@@ -20,7 +20,7 @@ const TodoContainer = () => {
 
   //* From Server Store
   const { data: todos, isLoading } = useGetTodosQuery(priority);
-  console.log(todos);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }

@@ -28,9 +28,8 @@ const AddTodoModal = () => {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
 
-  const [addTodo, { data, isLoading, isError, isSuccess }] =
-    useCreateTodoMutation();
-  console.log({ data, isLoading, isError, isSuccess });
+  //* const [addTodo, { data, isLoading, isError, isSuccess }] = //Can Be use when Creating
+  const [addTodo] = useCreateTodoMutation();
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const randomString =

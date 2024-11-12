@@ -1,42 +1,59 @@
-import { useAppDispatch } from "@/redux/hooks";
+import { useDeleteTodoMutation, useUpdateTodoMutation } from "@/redux/api/api";
 import { Button } from "../ui/button";
-import { removeTodo, toggleCompleted } from "@/redux/features/todo.slice";
 import UpdateTodoModel from "./UpdateTodoModel";
 type TTodoCardProps = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   priority: string;
   isCompleted?: boolean;
 };
 const TodoCard = ({
-  id,
+  _id,
   title,
   description,
   isCompleted,
   priority,
 }: TTodoCardProps) => {
-  const dispatch = useAppDispatch();
-
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
+  const [deleteTodo, { isLoading: deleting }] = useDeleteTodoMutation();
   const toggleHandler = () => {
-    dispatch(toggleCompleted(id));
+    const taskData = {
+      title,
+      description,
+      priority,
+      isCompleted: !isCompleted,
+    };
+    const options = {
+      id: _id,
+      data: taskData,
+    };
+
+    updateTodo(options);
   };
+
+  if (isLoading || deleting) {
+    return <div>Loading....</div>;
+  }
   return (
     <div className="bg-white rounded-md flex justify-start items-center p-3 border">
-      <input
-        className="mr-3"
-        onChange={toggleHandler}
-        type="checkbox"
-        name="complete"
-        id="complete"
-      />
-      <p className="font-semibold flex-1">{title}</p>
+      <p className="font-semibold flex-1 ">{title}</p>
 
       <div className="flex-1">
         {isCompleted ? (
-          <p className="text-green-500 font-semibold">Complete</p>
+          <p
+            onClick={toggleHandler}
+            className="text-white font-semibold cursor-pointer bg-green-500 inline p-1 px-2 rounded-full"
+          >
+            Complete
+          </p>
         ) : (
-          <p className="text-red-500 font-semibold">Pending</p>
+          <p
+            onClick={toggleHandler}
+            className="text-white font-semibold cursor-pointer bg-red-500 inline p-1 px-2 rounded-full"
+          >
+            Pending
+          </p>
         )}
       </div>
 
@@ -63,11 +80,8 @@ const TodoCard = ({
         )}
       </div>
       <div className="space-x-5">
-        <UpdateTodoModel id={id} />
-        <Button
-          className="bg-[#5C53FE]"
-          onClick={() => dispatch(removeTodo(id))}
-        >
+        <UpdateTodoModel id={_id} />
+        <Button className="bg-[#5C53FE]" onClick={() => deleteTodo(_id)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,29 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppDispatch } from "@/redux/hooks";
-import { setFilter } from "@/redux/features/todo.slice";
 
-export function TodoFilter({ priority, setPriority }) {
-  const dispatch = useAppDispatch();
-
-  const handleFilterClick = (value: string) => {
-    // dispatch(filterTodo(filter));
-    setPriority(value);
-    if (value === "all") {
-      dispatch(setFilter({ type: "", value: "" }));
-    } else if (value === "pending") {
-      dispatch(setFilter({ type: "status", value: value }));
-    } else if (value === "completed") {
-      dispatch(setFilter({ type: "status", value: value }));
-    } else if (value === "high") {
-      dispatch(setFilter({ type: "priority", value: value }));
-    } else if (value === "medium") {
-      dispatch(setFilter({ type: "priority", value: value }));
-    } else if (value === "low") {
-      dispatch(setFilter({ type: "priority", value: value }));
-    }
-  };
+type TodoFilterProps = {
+  priority: string;
+  setPriority: (value: string) => void;
+};
+export function TodoFilter({ priority, setPriority }: TodoFilterProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,7 +26,7 @@ export function TodoFilter({ priority, setPriority }) {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
           value={priority}
-          onValueChange={(value) => handleFilterClick(value)}
+          onValueChange={(value) => setPriority(value)}
         >
           <DropdownMenuRadioItem value="">All Task</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="pending">Pending</DropdownMenuRadioItem>
@@ -56,7 +38,7 @@ export function TodoFilter({ priority, setPriority }) {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
           value={priority}
-          onValueChange={(value) => handleFilterClick(value)}
+          onValueChange={(value) => setPriority(value)}
         >
           <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>
