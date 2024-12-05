@@ -4,6 +4,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "http://todoapp.n-a-asraful-khan.xyz/",
   plugins: [react()],
   resolve: {
     alias: {
